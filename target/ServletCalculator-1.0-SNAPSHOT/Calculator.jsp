@@ -74,7 +74,17 @@
             <input type='radio' name='opp' value='mul'>Multiply
             <input type='radio' name='opp' value='div'>Divide
             </span>
+            
             <input type='submit' value='=' id='submit'>
+            <span>
+                Result: 
+                <% String result="0";
+                   if (cookieMap.containsKey("history0")) {
+                        result = cookieMap.get("history0");
+                    }
+                %>
+                <%=result%>
+            </span>
             
         </form>
         

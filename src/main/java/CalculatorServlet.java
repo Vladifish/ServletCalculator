@@ -35,11 +35,12 @@ public class CalculatorServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
+            double num1, num2;
             
-            double num1 = Double.parseDouble(request.getParameter("firstVal")); // TODO: handle errors late
-            double num2 = Double.parseDouble(request.getParameter("secondVal"));
+            num1 = Double.parseDouble(request.getParameter("firstVal")); // TODO: handle errors late
+            num2 = Double.parseDouble(request.getParameter("secondVal")); // throws numberformat exception on empty string
             String opp = request.getParameter("opp"); // can be null, so handle this later
-            getServletContext().setAttribute("opp", "hi");
+            
             double result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0
             
             // every successful computation should land here, no more exceptions
