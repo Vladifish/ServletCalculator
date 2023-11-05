@@ -57,12 +57,14 @@ public class CalculatorServlet extends HttpServlet {
                 String val = cookieMap.get("history" + (i-1));
                 calcHistory[i] = new Cookie("history" + (i), val);
             }
-            calcHistory[0] = new Cookie("history0", result+"");
+            
+            String truncated_res = String.format("%.2f", result);
+            calcHistory[0] = new Cookie("history0", truncated_res);
             
             for (int i=0; i<history_count; i++)
                 response.addCookie(calcHistory[i]);
             
-            getServletContext().setAttribute("result", result);
+            getServletContext().setAttribute("result", truncated_res);
             
             request.getRequestDispatcher("/Calculator.jsp").forward(request, response);
             
