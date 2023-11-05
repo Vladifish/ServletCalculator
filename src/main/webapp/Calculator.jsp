@@ -49,7 +49,22 @@
             <label for="firstVal">Input 2nd Number:</label> <input type="string" name="firstVal">
             <select name='history2'>
             <option selected='selected'>History</option> <!-- comment -->
-            
+            <%
+                 // should stop if the succeding cookie is not found
+                 for (int i=0; i<5; i++) {
+                    String cookieValue = null;
+                    if (cookieMap.containsKey("history"+i)) {
+                        cookieValue = cookieMap.get("history"+i);
+                    }
+                    else {
+                        break;
+                    }
+                        
+            %>
+                <option value=<%= cookieValue %>> 
+                    <%=cookieValue%>
+                </option>
+            <%}%>
             </select>
             </span>
             <label>Operator</label> 
