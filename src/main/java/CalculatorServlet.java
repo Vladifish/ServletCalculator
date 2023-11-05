@@ -35,9 +35,19 @@ public class CalculatorServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             double num1, num2;
+            String history1 = request.getParameter("history1");
+            String history2 = request.getParameter("history2");
             
-            num1 = Double.parseDouble(request.getParameter("firstVal")); // TODO: handle errors late
-            num2 = Double.parseDouble(request.getParameter("secondVal")); // throws numberformat exception on empty string
+            if (history1.equals("History"))
+                num1 = Double.parseDouble(request.getParameter("firstVal"));
+            else 
+                num1 = Double.parseDouble(history1);
+            
+            if (history2.equals("History"))
+                num2 = Double.parseDouble(request.getParameter("secondVal")); 
+            else 
+                num2 = Double.parseDouble(history2);
+            
             String opp = request.getParameter("opp"); // can be null, so handle this later
             
             double result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0

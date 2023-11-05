@@ -33,7 +33,7 @@
         <location>/missingInputError.jsp</location>
     </error-page>
     <error-page>
-        <exception-type>java.text.ParseException</exception-type>
+        <exception-type>java.lang.NumberFormatException</exception-type>
         <location>/valueError.jsp</location>
     </error-page>
     <error-page>
