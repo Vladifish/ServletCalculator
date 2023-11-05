@@ -34,7 +34,6 @@ public class CalculatorServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            response.setContentType("text/html;charset=UTF-8");
             double num1, num2;
             
             num1 = Double.parseDouble(request.getParameter("firstVal")); // TODO: handle errors late
@@ -42,7 +41,7 @@ public class CalculatorServlet extends HttpServlet {
             String opp = request.getParameter("opp"); // can be null, so handle this later
             
             double result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0
-            
+            // double result = 1;
             // every successful computation should land here, no more exceptions
             
             // the history would be a stack (kinda)
@@ -53,15 +52,17 @@ public class CalculatorServlet extends HttpServlet {
             HashMap<String, String> cookieMap = findCalcCookies(request);
             
             // should be skipped if the history is previously empty
-            for (int i=history_count-1; i>0; i++) {
-                String key = "history" + i;
-                String val = cookieMap.get(key);
-                calcHistory[i-1] = new Cookie(key, val);
+            // moves the previous values upwards
+            for (int i=history_count-1; i>0; i--) {
+                String val = cookieMap.get("history" + (i-1));
+                calcHistory[i] = new Cookie("history" + (i), val);
             }
             calcHistory[0] = new Cookie("history0", result+"");
             
             for (int i=0; i<history_count; i++)
                 response.addCookie(calcHistory[i]);
+            
+            getServletContext().setAttribute("result", result);
             
             request.getRequestDispatcher("/Calculator.jsp").forward(request, response);
             
@@ -76,17 +77,6 @@ public class CalculatorServlet extends HttpServlet {
                     cookieMap.put(name, c.getValue());
             }
             return cookieMap;
-    }
-    
-    protected Cookie[] updateHistory(double recent_result) {
-        Cookie[] calcHistory = new Cookie[history_count];
-        
-        // should be skipped if the history is previously empty
-        for (int i=history_count-1; i>0; i--) {
-            
-        }
-        calcHistory[0] = new Cookie("history0", recent_result+""); 
-        return calcHistory;
     }
     
     private double evaluate(double num1, String opp, double num2) {

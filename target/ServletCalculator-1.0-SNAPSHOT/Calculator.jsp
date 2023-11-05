@@ -46,7 +46,7 @@
             </select>
             </span>
             <span>
-            <label for="firstVal">Input 2nd Number:</label> <input type="string" name="firstVal">
+            <label for="secondVal">Input 2nd Number:</label> <input type="string" name="secondVal">
             <select name='history2'>
                 <option selected='selected'>History</option> <!-- comment -->
                 <%
@@ -78,12 +78,17 @@
             <input type='submit' value='=' id='submit'>
             <span>
                 Result: 
-                <% String result="0";
-                   if (cookieMap.containsKey("history0")) {
-                        result = cookieMap.get("history0");
-                    }
+                <% 
+                   if (request.getServletContext().getAttribute("result") != null) {
+                       
+                    
                 %>
-                <%=result%>
+                    <%=request.getServletContext().getAttribute("result")%>
+                <%  }
+                   else { %>
+                        0
+                <%}%>
+                
             </span>
             
         </form>

@@ -12,7 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Cancer</h1>
-        <%= request.getServletContext().getAttribute("opp")%>
+        <h1>Nullers</h1>
     </body>
 </html>
