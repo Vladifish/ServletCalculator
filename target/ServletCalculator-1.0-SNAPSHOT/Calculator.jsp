@@ -11,10 +11,10 @@
         <h1>
             La Calculatora
         </h1>
-        <form action="/ServletCalculator/CalculatorServlet" method="post">
+        <form action="/ServletCalculator/cookieTester" method="post">
             <% 
                 Cookie[] cookies = request.getCookies(); 
-                HashMap cookieMap = new HashMap();
+                HashMap<String, String> cookieMap = new HashMap<String, String>();
                 if (!cookies.equals(null)) {
                     for (Cookie c : cookies) {
                         String name = c.getName();
@@ -29,16 +29,21 @@
             <option selected='selected'>History</option> <!-- comment -->
             <%
                  // should stop if the succeding cookie is not found
-                 for (int i=0; !cookies.equals(null) && i<5; i++) {
-                    String cookieValue = cookieMap.get("history"+i).toString();
-                    if (cookieValue.equals(null))
+                 for (int i=0; i<5; i++) {
+                    String cookieValue = null;
+                    if (cookieMap.containsKey("history"+i)) {
+                        cookieValue = cookieMap.get("history"+i);
+                    }
+                    else {
                         break;
+                    }
+                        
             %>
                 <option value=<%= cookieValue %>> 
                     <%=cookieValue%>
                 </option>
             <%}%>
-            </select>
+            </option>           </select>
             </span>
             <span>
             <label for="firstVal">Input 2nd Number:</label> <input type="string" name="firstVal">

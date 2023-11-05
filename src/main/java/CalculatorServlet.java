@@ -34,6 +34,7 @@ public class CalculatorServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            response.setContentType("text/html;charset=UTF-8");
             
             double num1 = Double.parseDouble(request.getParameter("firstVal")); // TODO: handle errors late
             double num2 = Double.parseDouble(request.getParameter("secondVal"));
