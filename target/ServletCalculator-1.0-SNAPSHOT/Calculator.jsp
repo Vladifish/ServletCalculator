@@ -14,12 +14,13 @@
         <form action="/ServletCalculator/CalculatorServlet" method="post">
             <% 
                 Cookie[] cookies = request.getCookies(); 
-                HashMap<String, String> cookieMap = new HashMap<>();
-        
-                for (Cookie c : request.getCookies()) {
-                String name = c.getName();
-                if (name.contains("history")) 
-                    cookieMap.put(name, c.getValue());
+                HashMap cookieMap = new HashMap();
+                if (!cookies.equals(null)) {
+                    for (Cookie c : cookies) {
+                        String name = c.getName();
+                        if (name.contains("history")) 
+                            cookieMap.put(name, c.getValue());
+                }
             }
             %>
             <span>
@@ -27,10 +28,16 @@
             <select name='history1'>
             <option selected='selected'>History</option> <!-- comment -->
             <%
-                 
+                 // should stop if the succeding cookie is not found
+                 for (int i=0; !cookies.equals(null) && i<5; i++) {
+                    String cookieValue = cookieMap.get("history"+i).toString();
+                    if (cookieValue.equals(null))
+                        break;
             %>
-            <!--<option value=<%= //cookieValue %>><%=//cookieValue%></option>-->
-            
+                <option value=<%= cookieValue %>> 
+                    <%=cookieValue%>
+                </option>
+            <%}%>
             </select>
             </span>
             <span>
