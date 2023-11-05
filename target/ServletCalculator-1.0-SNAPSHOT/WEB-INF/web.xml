@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <welcome-file-list>
+        <welcome-file>Calculator.jsp</welcome-file>
+    </welcome-file-list>
+    <servlet>
+        <servlet-name>valueError</servlet-name>
+        <servlet-class>valueError.valueError</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CalculatorServlet</servlet-name>
+        <servlet-class>CalculatorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>valueError</servlet-name>
+        <url-pattern>/valueError</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CalculatorServlet</servlet-name>
+        <url-pattern>/CalculatorServlet</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <error-page>
+        <exception-type>java.lang.ArithmeticException</exception-type>
+        <location>/arithmeticError.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.NullPointerException</exception-type>
+        <location>/missingInputError.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.text.ParseException</exception-type>
+        <location>/valueError.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>422</error-code>
+        <location>/inputError.jsp</location>
+    </error-page>
+    
+    <context-param>
+        <param-name>opp</param-name>
+        <param-value>hello</param-value>
+    </context-param>
+</web-app>
