@@ -5,6 +5,7 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -40,23 +41,20 @@ public class CalculatorServlet extends HttpServlet {
             getServletContext().setAttribute("opp", "hi");
             double result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0
             
-            // every successful computation should land here, no more exceptionss
+            // every successful computation should land here, no more exceptions
             
             // the history would be a stack (kinda)
             // newest on top
             // if full, the oldest would be removed
             history_count = Math.min(history_count+1, MAX_HISTORY);
             Cookie[] calcHistory = new Cookie[history_count];
-        
+            HashMap<String, String> cookieMap = findCalcCookies(request);
+            
             // should be skipped if the history is previously empty
-            if (history_count > 1) {
-                // will store previous cookies, with one blank space
-                findCalcCookies(request, calcHistory); 
-                // slow operation, so I just perform it once
-                // I could probably use an actual queue to make the operation faster lol
-                for (int i=history_count-1, j=i-1; i>0; i--, j--) {
-                    calcHistory[i] = new Cookie("history"+i, calcHistory[j].getValue());
-                }
+            for (int i=history_count-1; i>0; i++) {
+                String key = "history" + i;
+                String val = cookieMap.get(key);
+                calcHistory[i-1] = new Cookie(key, val);
             }
             calcHistory[0] = new Cookie("history0", result+"");
             
@@ -67,14 +65,15 @@ public class CalculatorServlet extends HttpServlet {
             
     }
     
-    private void findCalcCookies(HttpServletRequest request, Cookie[] calcHistory) {
-        Cookie[] cookies = request.getCookies();
-        int i=0;
-        for (Cookie c : cookies) {
-            if(c.getValue().equals("history" + i))
-                calcHistory[i++] = c;
-            
-        }
+    private HashMap<String,String> findCalcCookies(HttpServletRequest request) {
+            HashMap<String, String> cookieMap = new HashMap<>();
+        
+            for (Cookie c : request.getCookies()) {
+                String name = c.getName();
+                if (name.contains("history")) 
+                    cookieMap.put(name, c.getValue());
+            }
+            return cookieMap;
     }
     
     protected Cookie[] updateHistory(double recent_result) {

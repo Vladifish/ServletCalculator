@@ -7,39 +7,37 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%@page import="java.util.*"%>
         <h1>
             La Calculatora
         </h1>
         <form action="/ServletCalculator/CalculatorServlet" method="post">
-            <% Cookie[] cookies = request.getCookies(); %>
+            <% 
+                Cookie[] cookies = request.getCookies(); 
+                HashMap<String, String> cookieMap = new HashMap<>();
+        
+                for (Cookie c : request.getCookies()) {
+                String name = c.getName();
+                if (name.contains("history")) 
+                    cookieMap.put(name, c.getValue());
+            }
+            %>
             <span>
             <label for="firstVal">Input 1st Number:</label> <input type="string" name="firstVal">
             <select name='history1'>
             <option selected='selected'>History</option> <!-- comment -->
             <%
-                int j = 0;
-                for (int i=0; i< cookies.length; i++) {
-                    if (cookies[i].getName().equals("history" + j)) {
-                        String cookieValue = cookies[i].getValue();
-                        j++;
+                 
             %>
-            <option value=<%= cookieValue %>><%=cookieValue%></option>
-            <%}}%>
+            <!--<option value=<%= //cookieValue %>><%=//cookieValue%></option>-->
+            
             </select>
             </span>
             <span>
             <label for="firstVal">Input 2nd Number:</label> <input type="string" name="firstVal">
             <select name='history2'>
             <option selected='selected'>History</option> <!-- comment -->
-            <%
-                j = 0;
-                for (int i=0; i< cookies.length; i++) {
-                    if (cookies[i].getName().equals("history" + j)) {
-                        String cookieValue = cookies[i].getValue();
-                        j++;
-            %>
-            <option value=<%= cookieValue %>><%=cookieValue%></option>
-            <%}}%>
+            
             </select>
             </span>
             <label>Operator</label> 
