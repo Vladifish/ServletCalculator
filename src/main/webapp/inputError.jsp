@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>I need more bullets</h1>
+        <h1>Error: malformed data</h1>
     </body>
 </html>

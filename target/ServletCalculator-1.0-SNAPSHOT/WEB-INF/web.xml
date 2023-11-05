@@ -37,6 +37,10 @@
         <location>/valueError.jsp</location>
     </error-page>
     <error-page>
+        <exception-type>java.text.ParseException</exception-type>
+        <location>/valueError.jsp</location>
+    </error-page>
+    <error-page>
         <error-code>422</error-code>
         <location>/inputError.jsp</location>
     </error-page>

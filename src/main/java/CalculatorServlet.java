@@ -4,10 +4,7 @@
  */
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -74,7 +71,8 @@ public class CalculatorServlet extends HttpServlet {
             for (int i=0; i<history_count; i++)
                 response.addCookie(calcHistory[i]);
             
-            getServletContext().setAttribute("result", truncated_res);
+            String storedCalculation = String.format("%.2f %c %.2f = %s",num1, readOperationSymbol(opp), num2, truncated_res);
+            getServletContext().setAttribute("result", storedCalculation);
             
             request.getRequestDispatcher("/Calculator.jsp").forward(request, response);
             
@@ -103,6 +101,25 @@ public class CalculatorServlet extends HttpServlet {
                 if (num2 == 0)
                     throw new ArithmeticException();
                 return num1 / num2;
+            default : 
+                // should be unreachable since the other parts are checked 
+                // before the function call
+                throw new NullPointerException();
+        }
+    }
+    
+    // similar to the evaluate function but simply used to provide 
+    // a symbol for the result output
+    private static char readOperationSymbol(String opp) {
+        switch (opp) {
+            case "add" :
+                return '+';
+            case "mul" :
+                return '*';
+            case "sub" :
+                return '-';
+            case "div" :
+                return '/';
             default : 
                 // should be unreachable since the other parts are checked 
                 // before the function call
