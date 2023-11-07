@@ -13,6 +13,5 @@
     </head>
     <body>
         <h1>Error in parsing value</h1>
-        <a href="Calculator.jsp">Go back</a>
     </body>
 </html>

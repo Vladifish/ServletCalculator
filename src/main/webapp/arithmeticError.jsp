@@ -12,7 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Error: division by zero</h1>
-        <a href="Calculator.jsp">Go back</a>
+        <h1>NAPAKAKAKAKAKAKAKAK!</h1>
     </body>
 </html>

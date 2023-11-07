@@ -12,7 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Error: a value was missing</h1>
-        <a href="Calculator.jsp">Go back</a>
+        <h1>Nullers</h1>
     </body>
 </html>
