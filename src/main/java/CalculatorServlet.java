@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
 
 /**
  *
@@ -28,26 +29,38 @@ public class CalculatorServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.text.ParseException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            double num1, num2;
+            double num1=0, num2=0;
             String history1 = request.getParameter("history1");
             String history2 = request.getParameter("history2");
             
-            if (history1.equals("History"))
-                num1 = Double.parseDouble(request.getParameter("firstVal"));
-            else 
-                num1 = Double.parseDouble(history1);
-            
-            if (history2.equals("History"))
-                num2 = Double.parseDouble(request.getParameter("secondVal")); 
-            else 
-                num2 = Double.parseDouble(history2);
+            //try {
+                if (history1.equals("History"))
+                    num1 = Double.parseDouble(request.getParameter("firstVal"));
+                else 
+                    num1 = Double.parseDouble(history1);
+
+                if (history2.equals("History"))
+                    num2 = Double.parseDouble(request.getParameter("secondVal")); 
+                else 
+                    num2 = Double.parseDouble(history2);
+            /*
+            } catch(NumberFormatException e) {
+                throw new java.text.ParseException("error", MAX_HISTORY);
+            }*/
             
             String opp = request.getParameter("opp"); // can be null, so handle this later
             
-            double result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0
+            double result = 0;
+            try {
+                result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0
+            } catch (NullPointerException e) {
+                response.sendError(422, "Missing data");
+            }
+            
             // double result = 1;
             // every successful computation should land here, no more exceptions
             

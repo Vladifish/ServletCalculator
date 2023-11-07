@@ -14,7 +14,7 @@
         <form action="/ServletCalculator/CalculatorServlet" method="post">
             <% 
                 Cookie[] cookies = request.getCookies(); 
-                HashMap<String, String> cookieMap = new HashMap<String, String>();
+                HashMap<String, String> cookieMap = new HashMap<String, String>(); // throws errors if I use diamond operator
                 if (cookies != null) {
                     for (Cookie c : cookies) {
                         String name = c.getName();
@@ -24,6 +24,11 @@
             }
             %>
             <span>
+                <!-- 
+                    The Servlet would prioritize the history value even if there is an existing 
+                    input in the string input. Reduces headaches from browser automatically adding
+                    data. Also stops error-code 422 from happening
+                -->
             <label for="firstVal">Input 1st Number:</label> <input type="string" name="firstVal">
             <select name='history1'>
             <option selected='selected'>History</option> <!-- comment -->
