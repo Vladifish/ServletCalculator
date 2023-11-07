@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Missing input</h1>
-        <a href="/Calculator.jsp">Go back</a>
+        <h1>Error: Missing input/s</h1>
+        <a href="/ServletCalculator/Calculator.jsp">Go back</a>
     </body>
 </html>

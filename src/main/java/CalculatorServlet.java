@@ -52,14 +52,17 @@ public class CalculatorServlet extends HttpServlet {
                 throw new java.text.ParseException("error", MAX_HISTORY);
             }*/
             
-            String opp = request.getParameter("opp"); // can be null, so handle this later
-            
-            double result = 0;
+            String opp = "";
             try {
-                result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0
+                opp = request.getParameter("opp"); // can be null, so handle this later
             } catch (NullPointerException e) {
                 response.sendError(422, "Missing data");
+                request.getRequestDispatcher("/Calculator.jsp").forward(request, response);
             }
+            
+            
+            double result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0
+            
             
             // double result = 1;
             // every successful computation should land here, no more exceptions
