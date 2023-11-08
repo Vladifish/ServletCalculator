@@ -37,7 +37,8 @@ public class CalculatorServlet extends HttpServlet {
             String history1 = request.getParameter("history1");
             String history2 = request.getParameter("history2");
             
-            //try {
+            // program explodes if we use parseException
+           // try {
                 if (history1.equals("History"))
                     num1 = Double.parseDouble(request.getParameter("firstVal"));
                 else 
@@ -47,22 +48,23 @@ public class CalculatorServlet extends HttpServlet {
                     num2 = Double.parseDouble(request.getParameter("secondVal")); 
                 else 
                     num2 = Double.parseDouble(history2);
-            /*
-            } catch(NumberFormatException e) {
-                throw new java.text.ParseException("error", MAX_HISTORY);
+            
+            /*} catch(NumberFormatException e) {
+                linkValueError();
             }*/
-            
+           
             String opp = "";
-            try {
+            
                 opp = request.getParameter("opp"); // can be null, so handle this later
-            } catch (NullPointerException e) {
-                response.sendError(422, "Missing data");
-                request.getRequestDispatcher("/Calculator.jsp").forward(request, response);
-            }
             
-            
-            double result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0
-            
+            double result = 0;
+            // can't seem to make the redirect work
+            //try {
+                result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0
+            /*} catch (NullPointerException e) {
+                response.sendError(422, "Cannot compute without an operator");
+                response.sendRedirect("/inputError.jsp");
+            }*/
             
             // double result = 1;
             // every successful computation should land here, no more exceptions
@@ -92,6 +94,10 @@ public class CalculatorServlet extends HttpServlet {
             
             request.getRequestDispatcher("/Calculator.jsp").forward(request, response);
             
+    }
+    
+    private void linkValueError() throws ParseException {
+        throw new java.text.ParseException("error", MAX_HISTORY);
     }
     
     private HashMap<String,String> findCalcCookies(HttpServletRequest request) {
@@ -157,7 +163,7 @@ public class CalculatorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            
     }
 
     /**
