@@ -29,9 +29,15 @@
                     input in the string input. Reduces headaches from browser automatically adding
                     data. Also stops error-code 422 from happening
                 -->
+                <!-- 
+                    There's also a problem here that I can't seem to wrap my head around, 
+                    the history dropdown is delayed by one result. The cookies are updating
+                    but you either need to reload the page or submit a new form to see the recent result.
+                    It still caps at 5 tho, so that's working.
+                -->
             <label for="firstVal">Input 1st Number:</label> <input type="string" name="firstVal">
             <select name='history1'>
-            <option selected='selected'>History</option> <!-- comment -->
+            <option selected disabled>History</option> <!-- comment -->
                 <%
                      // should stop if the succeding cookie is not found
                      for (int i=0; i<5; i++) {
@@ -53,7 +59,7 @@
             <span>
             <label for="secondVal">Input 2nd Number:</label> <input type="string" name="secondVal">
             <select name='history2'>
-                <option selected='selected'>History</option> <!-- comment -->
+                <option selected disabled>History</option> <!-- comment -->
                 <%
                  // should stop if the succeding cookie is not found
                  for (int i=0; i<5; i++) {

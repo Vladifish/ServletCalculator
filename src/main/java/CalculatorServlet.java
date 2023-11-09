@@ -38,20 +38,16 @@ public class CalculatorServlet extends HttpServlet {
             String history2 = request.getParameter("history2");
             
             // program explodes if we use parseException
-           // try {
-                if (history1.equals("History"))
-                    num1 = Double.parseDouble(request.getParameter("firstVal"));
-                else 
-                    num1 = Double.parseDouble(history1);
+            if (history1 == null)
+                num1 = Double.parseDouble(request.getParameter("firstVal"));
+            else 
+                num1 = Double.parseDouble(history1);
 
-                if (history2.equals("History"))
-                    num2 = Double.parseDouble(request.getParameter("secondVal")); 
-                else 
-                    num2 = Double.parseDouble(history2);
+            if (history2 == null)
+                num2 = Double.parseDouble(request.getParameter("secondVal")); 
+            else 
+                num2 = Double.parseDouble(history2);
             
-            /*} catch(NumberFormatException e) {
-                linkValueError();
-            }*/
            
             String opp = "";
             
