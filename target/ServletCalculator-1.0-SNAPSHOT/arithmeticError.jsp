@@ -12,7 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>ERROR: Division by 0</h1>
+        <h1>ERROR: Cannot compute the value</h1>
+        <p>Could be that the number is too large or division by zero</p>
         <a href="/ServletCalculator/Calculator.jsp">Go back</a>
     </body>
 </html>
