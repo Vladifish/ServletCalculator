@@ -29,11 +29,10 @@ public class CalculatorServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.text.ParseException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            double num1=0, num2=0;
+            double num1, num2;
             String history1 = request.getParameter("history1");
             String history2 = request.getParameter("history2");
             
@@ -49,21 +48,10 @@ public class CalculatorServlet extends HttpServlet {
                 num2 = Double.parseDouble(history2);
             
            
-            String opp = "";
+            String opp = request.getParameter("opp"); // can be null, so handle this later
             
-                opp = request.getParameter("opp"); // can be null, so handle this later
+            double result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0
             
-            double result = 0;
-            // can't seem to make the redirect work
-            //try {
-                result = evaluate(num1, opp, num2); // can throw arithmetic exception, div by 0
-            /*} catch (NullPointerException e) {
-                response.sendError(422, "Cannot compute without an operator");
-                response.sendRedirect("/inputError.jsp");
-            }*/
-            
-            // double result = 1;
-            // every successful computation should land here, no more exceptions
             
             // the history would be a stack (kinda)
             // newest on top
@@ -88,7 +76,9 @@ public class CalculatorServlet extends HttpServlet {
             String storedCalculation = String.format("%.2f %c %.2f = %s",num1, readOperationSymbol(opp), num2, truncated_res);
             getServletContext().setAttribute("result", storedCalculation);
             
-            request.getRequestDispatcher("/Calculator.jsp").forward(request, response);
+            response.sendRedirect("/ServletCalculator/Calculator.jsp");
+            // this was causing all of my headaches oml
+            //request.getRequestDispatcher("/Calculator.jsp").forward(request, response);
             
     }
     
